@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="17701" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+    <device id="watch38"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="17500"/>
+    </dependencies>
+    <scenes>
+        <!--Interface Controller-->
+        <scene sceneID="aou-V4-d1y">
+            <objects>
+                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="Watch_Shooting_Timer" customModuleProvider="target">
+                    <items>
+                        <label alignment="center" text="Shooting Timer" id="ga0-XH-2IX">
+                            <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </label>
+                        <button width="1" alignment="left" title="Configuration" enabled="NO" id="iFY-4h-OdM">
+                            <connections>
+                                <segue destination="TnO-oi-T6D" kind="push" id="0k6-vB-8Zg"/>
+                            </connections>
+                        </button>
+                        <button width="1" height="80" alignment="left" title="Start" enabled="NO" id="lgz-ae-brK">
+                            <color key="backgroundColor" red="0.0" green="0.87871211770000002" blue="0.33174735309999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <fontDescription key="font" type="system" weight="light" pointSize="32"/>
+                            <connections>
+                                <action selector="startPressed" destination="AgC-eL-Hgc" id="taL-ZC-0BU"/>
+                            </connections>
+                        </button>
+                    </items>
+                    <connections>
+                        <outlet property="configButton" destination="iFY-4h-OdM" id="7Gh-9N-orM"/>
+                        <outlet property="startButton" destination="lgz-ae-brK" id="pvu-Oa-GaU"/>
+                        <outlet property="statusLabel" destination="ga0-XH-2IX" id="1QL-0P-frK"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="157" y="1"/>
+        </scene>
+        <!--Settings Interface Controller-->
+        <scene sceneID="WTA-J4-az0">
+            <objects>
+                <controller id="TnO-oi-T6D" customClass="SettingsInterfaceController" customModule="Watch_Shooting_Timer_Extension">
+                    <items>
+                        <switch width="1" alignment="left" value="YES" title="Black ground" id="UXm-9o-kN2">
+                            <connections>
+                                <action selector="blackBackSwitchChange:" destination="TnO-oi-T6D" id="QyH-IA-nue"/>
+                            </connections>
+                        </switch>
+                        <switch width="1" alignment="left" value="YES" title="Title" id="bqJ-ri-Ku4">
+                            <connections>
+                                <action selector="titleEnabledSwitchChange:" destination="TnO-oi-T6D" id="PfK-Md-cov"/>
+                            </connections>
+                        </switch>
+                        <switch width="1" alignment="left" value="YES" title="White target" id="k5q-tu-1gv">
+                            <connections>
+                                <action selector="whiteTargetSwitchChange:" destination="TnO-oi-T6D" id="ckT-2d-12D"/>
+                            </connections>
+                        </switch>
+                    </items>
+                    <connections>
+                        <outlet property="blackBackSwitch" destination="UXm-9o-kN2" id="NNV-pZ-4sa"/>
+                        <outlet property="titleEnableSwitch" destination="bqJ-ri-Ku4" id="2A9-WV-KDm"/>
+                        <outlet property="whiteTargetSwitch" destination="k5q-tu-1gv" id="sNS-Tr-f38"/>
+                    </connections>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="435" y="1"/>
+        </scene>
+    </scenes>
+</document>
