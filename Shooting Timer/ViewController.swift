@@ -383,6 +383,9 @@ class ViewController: UIViewController, WCSessionDelegate {
         readDefaultsSettings()
         setSettingsDefaults()
         wcSession.sendMessage(["iosApp":"show"], replyHandler: nil, errorHandler: nil)
+        wcSession = WCSession.default
+        wcSession.delegate = self
+        wcSession.activate()
     }
     override var prefersStatusBarHidden: Bool {
         return true
