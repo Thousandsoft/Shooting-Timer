@@ -44,6 +44,26 @@ class ViewController: UIViewController, WCSessionDelegate {
     @IBOutlet weak var greenLight: UIImageView!
     @IBOutlet weak var redLight: UIImageView!
     
+    @IBOutlet weak var sizeSlider: UISlider!
+    
+    @IBOutlet weak var distanceLabel: UILabel!
+    
+    
+    
+    @IBAction func sizeSliderValueChange(_ sender: UISlider) {
+        distanceLabel.text = String(format: "%.01f", sizeSlider.value) + "m"
+        let sideLength = sizeSlider.value / 2 * 128
+        //let frame = CGRect(x: targetImageView.frame.origin.x, y: targetImageView.frame.origin.y, width: CGFloat(sideLength), height: CGFloat(sideLength))
+        //targetImageView.frame = frame
+        //viewDidLayoutSubviews()
+        targetImageView.frame.size.height = CGFloat(sideLength)
+        targetImageView.frame.size.width = CGFloat(sideLength)
+            
+    }
+    
+    /*override func viewDidLayoutSubviews() {
+        
+    }*/
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         
@@ -118,6 +138,12 @@ class ViewController: UIViewController, WCSessionDelegate {
                 self.defaults.set(false, forKey: "Titles")
             }
         }
+        if message["watchApp"] as? String == "started" {
+            DispatchQueue.main.async {
+                self.wcSession.sendMessage(["iosApp":"show"], replyHandler: nil, errorHandler: nil)
+            }
+        }
+        
     }
     
     

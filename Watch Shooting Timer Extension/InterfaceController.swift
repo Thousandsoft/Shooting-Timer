@@ -76,6 +76,11 @@ class InterfaceController: WKInterfaceController {
     
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
+        if isSuported(){
+            session.delegate = self
+            session.activate()
+            session.sendMessage(["watchApp":"started"], replyHandler: nil, errorHandler: nil)
+        }
     }
     
     override func willActivate() {
@@ -87,6 +92,7 @@ class InterfaceController: WKInterfaceController {
         if isSuported(){
             session.delegate = self
             session.activate()
+            session.sendMessage(["watchApp":"started"], replyHandler: nil, errorHandler: nil)
         }
         /*if (!isReachable()){
             statusLabel.setTextColor(UIColor.red)
