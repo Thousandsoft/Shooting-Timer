@@ -48,22 +48,44 @@ class ViewController: UIViewController, WCSessionDelegate {
     
     @IBOutlet weak var distanceLabel: UILabel!
     
+    @IBOutlet weak var targetWidthConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var targetHeight: NSLayoutConstraint!
+    
+    
+    @IBOutlet weak var targetWidth: NSLayoutConstraint!
+    
+    
+    @IBOutlet weak var greenLightHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var greenLightWidth: NSLayoutConstraint!
+    
+    
+    @IBOutlet weak var redLightHeight: NSLayoutConstraint!
+    
+    @IBOutlet weak var redLightWidth: NSLayoutConstraint!
+    
+    
     
     
     @IBAction func sizeSliderValueChange(_ sender: UISlider) {
         distanceLabel.text = String(format: "%.01f", sizeSlider.value) + "m"
-        let sideLength = sizeSlider.value / 2 * 128
-        //let frame = CGRect(x: targetImageView.frame.origin.x, y: targetImageView.frame.origin.y, width: CGFloat(sideLength), height: CGFloat(sideLength))
-        //targetImageView.frame = frame
-        //viewDidLayoutSubviews()
-        targetImageView.frame.size.height = CGFloat(sideLength)
-        targetImageView.frame.size.width = CGFloat(sideLength)
-            
+        defaults.set(sizeSlider.value, forKey: "sizeSliderValue")
+        let sideLengthInCM = sizeSlider.value / 2 / 50 * 100
+        let sideLenght = sideLengthInCM * 128
+        targetWidth.constant = CGFloat(sideLenght)
+        targetHeight.constant = CGFloat(sideLenght)
+        defaults.set(sideLenght, forKey: "targetSideLenght")
+        let lightSideLenght = sideLengthInCM / 5.5 * 128
+        defaults.set(lightSideLenght, forKey: "lightSideLenght")
+        greenLightHeight.constant = CGFloat(lightSideLenght)
+        greenLightWidth.constant = CGFloat(lightSideLenght)
+        redLightHeight.constant = CGFloat(lightSideLenght)
+        redLightWidth.constant = CGFloat(lightSideLenght)
+        mainView.layoutIfNeeded()
     }
     
-    /*override func viewDidLayoutSubviews() {
-        
-    }*/
+    
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         
@@ -295,6 +317,7 @@ class ViewController: UIViewController, WCSessionDelegate {
         navigationController?.navigationBar.backgroundColor = UIColor.darkGray
         navigationController?.navigationBar.barTintColor = UIColor.black
         navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor:UIColor.systemGreen]
+        defaultSettings()
         readDefaultsSettings()
         setSettingsDefaults()
         wcSession = WCSession.default
@@ -367,7 +390,23 @@ class ViewController: UIViewController, WCSessionDelegate {
     func setSettingsDefaults(){
         setTargetImage(state: targetIsWhite)
         setBackgroundColor(state: backgroundIsBlack)
+        redLightWidth.constant = CGFloat(defaults.double(forKey: "lightSideLenght"))
+        redLightHeight.constant = CGFloat(defaults.double(forKey: "lightSideLenght"))
+        greenLightWidth.constant = CGFloat(defaults.double(forKey: "lightSideLenght"))
+        greenLightHeight.constant = CGFloat(defaults.double(forKey: "lightSideLenght"))
+        targetHeight.constant = CGFloat(defaults.double(forKey: "targetSideLenght"))
+        targetWidth.constant = CGFloat(defaults.double(forKey: "targetSideLenght"))
+        sizeSlider.value = defaults.float(forKey: "sizeSliderValue")
+        distanceLabel.text = String(format: "%.01f", defaults.float(forKey: "sizeSliderValue")) + "m"
     }
+    
+    func defaultSettings(){
+        UserDefaults.standard.register(defaults: ["sizeSliderValue" : 2.5])
+        UserDefaults.standard.register(defaults: ["targetSideLenght" : 320])
+        UserDefaults.standard.register(defaults: ["lightSideLenght" : 58])
+        
+    }
+    
     
     func setTargetImage(state: Bool) {
         if (state){
