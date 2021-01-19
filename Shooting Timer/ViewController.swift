@@ -212,6 +212,8 @@ class ViewController: UIViewController, WCSessionDelegate {
             settingsButton.isEnabled = false
             showTitle()
             wcSession.sendMessage(["exStatus":"started"], replyHandler: nil, errorHandler: nil)
+            sizeSlider.isHidden = true
+            distanceLabel.isHidden = true
         }
         else {
             offAllLights()
@@ -227,6 +229,8 @@ class ViewController: UIViewController, WCSessionDelegate {
             settingsButton.isEnabled = true
             setMainTitle()
             wcSession.sendMessage(["exStatus":"stopped"], replyHandler: nil, errorHandler: nil)
+            sizeSlider.isHidden = false
+            distanceLabel.isHidden = false
         }
     }
     
@@ -377,6 +381,8 @@ class ViewController: UIViewController, WCSessionDelegate {
         settingsButton.isEnabled = true
         setMainTitle()
         wcSession.sendMessage(["exStatus":"stopped"], replyHandler: nil, errorHandler: nil)
+        sizeSlider.isHidden = false
+        distanceLabel.isHidden = false
     }
     
     
@@ -404,6 +410,9 @@ class ViewController: UIViewController, WCSessionDelegate {
         UserDefaults.standard.register(defaults: ["sizeSliderValue" : 2.5])
         UserDefaults.standard.register(defaults: ["targetSideLenght" : 320])
         UserDefaults.standard.register(defaults: ["lightSideLenght" : 58])
+        UserDefaults.standard.register(defaults: ["White List" : false])
+        UserDefaults.standard.register(defaults: ["Background" : true])
+        UserDefaults.standard.register(defaults: ["DelayTime" : 60.0])
         
     }
     
