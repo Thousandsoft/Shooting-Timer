@@ -11,12 +11,26 @@ import Foundation
 import WatchConnectivity
 
 
-class InterfaceController: WKInterfaceController {
+class InterfaceController: WKInterfaceController, WKCrownDelegate {
     
     @IBOutlet weak var configButton: WKInterfaceButton!
     var isStarted = false
+    var distanceValue = 0.5
     
     @IBOutlet weak var statusLabel: WKInterfaceLabel!
+    
+    
+    func crownDidRotate(_ crownSequencer: WKCrownSequencer?, rotationalDelta: Double) {
+        let newValue = distanceValue + (rotationalDelta)
+        if newValue < 0.5 {
+            distanceValue = 0.5
+        } else if newValue > 2.5 {
+            distanceValue = 2.5
+        } else {
+            distanceValue = newValue
+        }
+        session.sendMessage(["distance":distanceValue], replyHandler: nil, errorHandler: nil)
+    }
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         
@@ -46,6 +60,7 @@ class InterfaceController: WKInterfaceController {
                 self.startButton.setBackgroundColor(UIColor.green)
                 self.startButton.setTitle("Start")
                 self.configButton.setEnabled(true)
+                self.crownSequencer.focus()
             }
          
         }
@@ -54,6 +69,7 @@ class InterfaceController: WKInterfaceController {
                 self.startButton.setBackgroundColor(UIColor.red)
                 self.startButton.setTitle("Stop")
                 self.configButton.setEnabled(false)
+                self.crownSequencer.resignFocus()
             }
         }
         
@@ -62,6 +78,7 @@ class InterfaceController: WKInterfaceController {
                 self.startButton.setEnabled(true)
                 self.statusLabel.setTextColor(UIColor.green)
                 self.configButton.setEnabled(true)
+                self.crownSequencer.focus()
             }
         }
         else if (message["iosApp"] as? String == "hide") {
@@ -69,6 +86,13 @@ class InterfaceController: WKInterfaceController {
                 self.startButton.setEnabled(false)
                 self.statusLabel.setTextColor(UIColor.red)
                 self.configButton.setEnabled(false)
+                self.crownSequencer.resignFocus()
+            }
+        }
+        
+        if let distance = message["distanceValue"] as? Double{
+            DispatchQueue.main.async {
+            self.distanceValue = distance
             }
         }
         
@@ -81,6 +105,8 @@ class InterfaceController: WKInterfaceController {
             session.activate()
             session.sendMessage(["watchApp":"started"], replyHandler: nil, errorHandler: nil)
         }
+        //crownSequencer.focus()
+        crownSequencer.delegate = self
     }
     
     override func willActivate() {
@@ -94,6 +120,7 @@ class InterfaceController: WKInterfaceController {
             session.activate()
             session.sendMessage(["watchApp":"started"], replyHandler: nil, errorHandler: nil)
         }
+        
         /*if (!isReachable()){
             statusLabel.setTextColor(UIColor.red)
             self.startButton.setEnabled(false)

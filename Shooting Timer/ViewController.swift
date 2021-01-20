@@ -83,6 +83,9 @@ class ViewController: UIViewController, WCSessionDelegate {
         redLightHeight.constant = CGFloat(lightSideLenght)
         redLightWidth.constant = CGFloat(lightSideLenght)
         mainView.layoutIfNeeded()
+        /*DispatchQueue.main.async {
+            self.wcSession.sendMessage(["distanceValue":self.defaults.float(forKey: "sizeSliderValue")], replyHandler: nil, errorHandler: nil)
+        }*/
     }
     
     
@@ -163,7 +166,14 @@ class ViewController: UIViewController, WCSessionDelegate {
         if message["watchApp"] as? String == "started" {
             DispatchQueue.main.async {
                 self.wcSession.sendMessage(["iosApp":"show"], replyHandler: nil, errorHandler: nil)
+                self.sendDistanceValue()
             }
+        }
+        if let distance = message["distance"] as? Double{
+        DispatchQueue.main.async {
+            self.sizeSlider.value = Float(distance)
+            self.sizeSliderValueChange(self.sizeSlider)
+        }
         }
         
     }
@@ -330,12 +340,19 @@ class ViewController: UIViewController, WCSessionDelegate {
         DispatchQueue.main.async {
             self.wcSession.sendMessage(["iosApp":"show"], replyHandler: nil, errorHandler: nil)
         }
-        
+        sendDistanceValue()
         NotificationCenter.default.addObserver(self, selector: #selector(hiding), name: UIApplication.willResignActiveNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(hiding), name: UIApplication.willTerminateNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(showing), name: UIApplication.willEnterForegroundNotification, object: nil)
         
     }
+    
+    func sendDistanceValue() {
+        DispatchQueue.main.async {
+            self.wcSession.sendMessage(["distanceValue":self.defaults.float(forKey: "sizeSliderValue")], replyHandler: nil, errorHandler: nil)
+        }
+    }
+    
     
     @objc func hiding () {
         wcSession.sendMessage(["iosApp":"hide"], replyHandler: nil, errorHandler: nil)
