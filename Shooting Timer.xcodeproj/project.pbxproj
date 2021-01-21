@@ -14,6 +14,7 @@
 		8424C5192579306F0091CB44 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8424C5172579306F0091CB44 /* Main.storyboard */; };
 		8424C51B257930870091CB44 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8424C51A257930870091CB44 /* Assets.xcassets */; };
 		8424C51E257930870091CB44 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8424C51C257930870091CB44 /* LaunchScreen.storyboard */; };
+		846EEAE425B9CC2B0054FFA4 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846EEAE325B9CC2B0054FFA4 /* AboutViewController.swift */; };
 		848AE7E525B085C40001A621 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 848AE7E425B085C40001A621 /* .gitignore */; };
 		84B69FA3257FAEF400CC27B2 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84B69FA2257FAEF400CC27B2 /* SettingsTableViewController.swift */; };
 		84C90CE82581216700224BD7 /* shot_sound.wav in Resources */ = {isa = PBXBuildFile; fileRef = 84C90CE72581216600224BD7 /* shot_sound.wav */; };
@@ -80,6 +81,7 @@
 		8424C51A257930870091CB44 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8424C51D257930870091CB44 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8424C51F257930870091CB44 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		846EEAE325B9CC2B0054FFA4 /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		848AE7E425B085C40001A621 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		84B69FA2257FAEF400CC27B2 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		84C90CE72581216600224BD7 /* shot_sound.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shot_sound.wav; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 				8424C51C257930870091CB44 /* LaunchScreen.storyboard */,
 				8424C51F257930870091CB44 /* Info.plist */,
 				84B69FA2257FAEF400CC27B2 /* SettingsTableViewController.swift */,
+				846EEAE325B9CC2B0054FFA4 /* AboutViewController.swift */,
 			);
 			path = "Shooting Timer";
 			sourceTree = "<group>";
@@ -321,6 +324,7 @@
 				84B69FA3257FAEF400CC27B2 /* SettingsTableViewController.swift in Sources */,
 				8424C5162579306E0091CB44 /* ViewController.swift in Sources */,
 				8424C5122579306E0091CB44 /* AppDelegate.swift in Sources */,
+				846EEAE425B9CC2B0054FFA4 /* AboutViewController.swift in Sources */,
 				8424C5142579306E0091CB44 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

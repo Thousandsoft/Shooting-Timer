@@ -14,12 +14,12 @@
                         <label alignment="center" text="Shooting Timer" id="ga0-XH-2IX">
                             <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </label>
-                        <button width="1" alignment="left" title="Configuration" enabled="NO" id="iFY-4h-OdM">
+                        <button width="1" alignment="left" title="Configuration" id="iFY-4h-OdM">
                             <connections>
                                 <segue destination="TnO-oi-T6D" kind="push" id="0k6-vB-8Zg"/>
                             </connections>
                         </button>
-                        <button width="1" height="80" alignment="left" title="Start" enabled="NO" id="lgz-ae-brK">
+                        <button width="1" height="80" alignment="left" title="Start" id="lgz-ae-brK">
                             <color key="backgroundColor" red="0.0" green="0.87871211770000002" blue="0.33174735309999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="font" type="system" weight="light" pointSize="32"/>
                             <connections>

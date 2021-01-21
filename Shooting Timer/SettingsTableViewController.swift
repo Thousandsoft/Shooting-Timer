@@ -55,12 +55,12 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, W
         if (showTitles){
             showTitles = !showTitles
             defaults.set(false, forKey: "Titles")
-            wcSession.sendMessage(["Title":"hide"], replyHandler: nil, errorHandler: nil)
+            wcSession.sendMessage(["titleEnabled":false], replyHandler: nil, errorHandler: nil)
         }
         else {
             showTitles = !showTitles
             defaults.set(true, forKey: "Titles")
-            wcSession.sendMessage(["Title":"show"], replyHandler: nil, errorHandler: nil)
+            wcSession.sendMessage(["titleEnabled":true], replyHandler: nil, errorHandler: nil)
         }
     }
     
@@ -80,10 +80,12 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, W
         if (whiteList) {
             whiteList = !whiteList
             defaults.set(false, forKey: "White List")
+            wcSession.sendMessage(["isWhiteList":false], replyHandler: nil, errorHandler: nil)
         }
         else {
             whiteList = !whiteList
             defaults.set(true, forKey: "White List")
+            wcSession.sendMessage(["isWhiteList":true], replyHandler: nil, errorHandler: nil)
         }
     }
     override func viewDidLoad() {
@@ -117,6 +119,7 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, W
             DispatchQueue.main.async {
                 self.blackBackgroundSwitch.isOn = true
                 self.defaults.set(true, forKey: "Background")
+                self.isBlackBackground = true
             }
             
         }
@@ -125,8 +128,44 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, W
             DispatchQueue.main.async {
                 self.blackBackgroundSwitch.isOn = false
                 self.defaults.set(false, forKey: "Background")
+                self.isBlackBackground = false
             }
         }
+        
+        if message["isWhiteTarget"] as? Bool == true {
+            DispatchQueue.main.async {
+                self.whiteSwitch.isOn = true
+                self.defaults.set(true, forKey: "White List")
+                self.whiteList = true
+            }
+            
+        }
+        
+        else if (message["isWhiteTarget"] as? Bool == false){
+            DispatchQueue.main.async {
+                self.whiteSwitch.isOn = false
+                self.defaults.set(false, forKey: "White List")
+                self.whiteList = false
+            }
+        }
+        
+        if message["title"] as? Bool == true {
+            DispatchQueue.main.async {
+                self.swowTitlesSwitch.isOn = true
+                self.defaults.set(true, forKey: "Titles")
+                self.showTitles = true
+            }
+            
+        }
+        
+        else if (message["title"] as? Bool == false){
+            DispatchQueue.main.async {
+                self.swowTitlesSwitch.isOn = false
+                self.defaults.set(false, forKey: "Titles")
+                self.showTitles = false
+            }
+        }
+        
         if message["settings"] as? String == "opened" {
             DispatchQueue.main.async {
                 self.wcSession.sendMessage(["isWhiteList":self.defaults.bool(forKey: "White List")], replyHandler: nil, errorHandler: nil)
@@ -152,7 +191,12 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, W
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         self.view.endEditing(true)
-        defaults.setValue(Double(delayTimeLabel.text!), forKey: "DelayTime")
+        /*if (delayTimeLabel.text != "" && delayTimeLabel.text != "0"){
+            defaults.setValue(Double(delayTimeLabel.text!), forKey: "DelayTime")
+        }
+        else {
+            defaults.setValue((60.0), forKey: "DelayTime")
+        }*/
         print("Returned!!!")
         return false
     }
@@ -223,14 +267,23 @@ class SettingsTableViewController: UITableViewController, UITextFieldDelegate, W
         
         let toolbar : UIToolbar = UIToolbar()
         toolbar.barStyle = .default
-        toolbar.items = [UIBarButtonItem(title: "Done", style: .done, target: onDone.target, action: onDone.action)]
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace,
+                    target: nil, action: nil)
+        toolbar.items = [spacer, UIBarButtonItem(title: "Done", style: .done, target: onDone.target, action: onDone.action)]
         toolbar.sizeToFit()
         self.delayTimeLabel.inputAccessoryView = toolbar
     }
     
     @objc func doneButtonTapped() {
         self.delayTimeLabel.resignFirstResponder()
-        defaults.setValue(Double(delayTimeLabel.text!), forKey: "DelayTime")
+        //defaults.setValue(Double(delayTimeLabel.text!), forKey: "DelayTime")
+        if (delayTimeLabel.text != "" && delayTimeLabel.text != "0" && delayTimeLabel.text != "00" && delayTimeLabel.text != "000"){
+            defaults.setValue(Double(delayTimeLabel.text!), forKey: "DelayTime")
+        }
+        else {
+            defaults.setValue((60.0), forKey: "DelayTime")
+        }
+        delayTimeLabel.text = String(format: "%.0f", defaults.double(forKey: "DelayTime"))
     }
     
 }

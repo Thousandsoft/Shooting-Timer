@@ -100,6 +100,8 @@ class InterfaceController: WKInterfaceController, WKCrownDelegate {
     
     override func awake(withContext context: Any?) {
         super.awake(withContext: context)
+        startButton.setEnabled(false)
+        configButton.setEnabled(false)
         if isSuported(){
             session.delegate = self
             session.activate()
