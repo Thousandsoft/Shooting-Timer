@@ -12,34 +12,12 @@ import WatchConnectivity
 
 class ViewController: UIViewController, WCSessionDelegate {
     
-    
-    
     @IBOutlet weak var mainView: UIView!
     @IBOutlet weak var targetImageView: UIImageView!
     @IBOutlet weak var settingsButton: UIBarButtonItem!
     @IBOutlet weak var startButton: UIBarButtonItem!
     @IBOutlet weak var navigationBat: UINavigationItem!
     @IBOutlet weak var timingSegmentedControl: UISegmentedControl!
-    var isRedLight = false
-    var isGreenLigth = false
-    var targetIsWhite = true
-    var backgroundIsBlack = true
-    var timer = Timer()
-    var shotsCount = 0
-    var isStarted = false
-    var timingInSeconds = 3.1
-    var repeatShooting = 5
-    var defaults = UserDefaults.standard
-    var showTitles = true
-    var shotSoundEffect: AVAudioPlayer?
-    var wcSession: WCSession!
-    var endlessRepeat = false
-    //private var session = WCSession.default
-    let shotSoundPath = Bundle.main.path(forResource: "shot_sound", ofType: "wav")!
-    let squeakSoundPath = Bundle.main.path(forResource: "beep-09", ofType: "wav")!
-    lazy var shotSoundUrl = URL(fileURLWithPath: shotSoundPath)
-    lazy var squeakSoundUrl = URL(fileURLWithPath: squeakSoundPath)
-    
     
     @IBOutlet weak var greenLight: UIImageView!
     @IBOutlet weak var redLight: UIImageView!
@@ -57,13 +35,30 @@ class ViewController: UIViewController, WCSessionDelegate {
     
     
     @IBOutlet weak var greenLightHeight: NSLayoutConstraint!
-    
     @IBOutlet weak var greenLightWidth: NSLayoutConstraint!
     
     
     @IBOutlet weak var redLightHeight: NSLayoutConstraint!
-    
     @IBOutlet weak var redLightWidth: NSLayoutConstraint!
+    
+    var isRedLight = false
+    var isGreenLigth = false
+    var targetIsWhite = true
+    var backgroundIsBlack = true
+    var timer = Timer()
+    var shotsCount = 0
+    var isStarted = false
+    var timingInSeconds = 3.1
+    var repeatShooting = 5
+    var defaults = UserDefaults.standard
+    var showTitles = true
+    var shotSoundEffect: AVAudioPlayer?
+    var wcSession: WCSession!
+    var endlessRepeat = false
+    let shotSoundPath = Bundle.main.path(forResource: "shot_sound", ofType: "wav")!
+    let squeakSoundPath = Bundle.main.path(forResource: "beep-09", ofType: "wav")!
+    lazy var shotSoundUrl = URL(fileURLWithPath: shotSoundPath)
+    lazy var squeakSoundUrl = URL(fileURLWithPath: squeakSoundPath)
     
     
     
@@ -83,9 +78,6 @@ class ViewController: UIViewController, WCSessionDelegate {
         redLightHeight.constant = CGFloat(lightSideLenght)
         redLightWidth.constant = CGFloat(lightSideLenght)
         mainView.layoutIfNeeded()
-        /*DispatchQueue.main.async {
-            self.wcSession.sendMessage(["distanceValue":self.defaults.float(forKey: "sizeSliderValue")], replyHandler: nil, errorHandler: nil)
-        }*/
     }
     
     
@@ -272,7 +264,6 @@ class ViewController: UIViewController, WCSessionDelegate {
         }
         redLightOn()
         changeLightToGreen()
-        //offAllLights()
     }
     
     func changeLightToGreen() {
